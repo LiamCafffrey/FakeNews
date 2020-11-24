@@ -69,3 +69,13 @@ def fit_model(x_train, y_train):
 
 def save_model(pipeline, file_name): 
 	joblib.dump(pipeline, file_name)
+
+
+
+
+
+
+
+
+
+
