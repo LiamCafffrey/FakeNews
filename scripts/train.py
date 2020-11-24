@@ -60,7 +60,7 @@ def fit_model(x_train, y_train):
 
 	final_pipe = Pipeline([
     ('preprocessing', preprocessor),
-    ('Logistic', LogisticRegression(solver = 'newton-cg', C = '0.4' ))])
+    ('Logistic', LogisticRegression(solver = 'newton-cg', C = 0.4 ))])
 
 	final_pipe.fit(x_train, y_train)
 
