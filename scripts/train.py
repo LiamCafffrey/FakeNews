@@ -7,7 +7,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
-import joblib
+import pickle
 
 
 def get_x(df):
@@ -25,34 +25,10 @@ def get_preprocessor():
 	preprocessor = ColumnTransformer([
     	('vectorizer_title', CountVectorizer(), 'title_clean'),
     	('vectorizer_text', CountVectorizer(), 'text_clean'),
+        ('scaling_title_char', MinMaxScaler(), ['title_length_char'])
 	])
 
 	return preprocessor
-
-# def calculate_best_param(x_train, y_train):
-# 	preprocessor = get_preprocessor()
-
-# 	final_pipe = Pipeline([
-# 	    ('preprocessing', preprocessor),
-# 	    ('Logistic', LogisticRegression())])
-
-# 	parameters = {
-#     'Logistic__solver': ('newton-cg', 'lbfgs', 'sag'),
-#     'Logistic__C': ([0.2, 0.4, 0.6, 0.8, 1.0])
-# 	}
-
-# 	grid_search = GridSearchCV(final_pipe,
-# 	                           parameters,
-# 	                           scoring = ["f1", "accuracy", "recall"], 
-# 	                           refit= "accuracy",
-# 	                           cv=3,
-# 	                           verbose = 0)
-
-# 	grid_search.fit(x_train, y_train)
-
-
-# 	return grid_search.best_params_['Logistic__solver'],  grid_search.best_params_['Logistic__C']
-
 
 def fit_model(x_train, y_train):
 	#best_solver, best_c = calculate_best_param(x_train, y_train)
@@ -67,5 +43,6 @@ def fit_model(x_train, y_train):
 	return final_pipe
 
 
-def save_model(pipeline, file_name): 
-	joblib.dump(pipeline, file_name)
+def save_model(pipeline, file_name):
+	with open("pipeline.pkl", "wb") as file:
+            pickle.dump(pipeline, file)

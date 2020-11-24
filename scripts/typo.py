@@ -1,7 +1,7 @@
 import enchant
 from df_generic import df_apply
 
-def create_get_typos_count():    
+def create_get_typos_count():
 	english = enchant.DictWithPWL("en_US", "vocab.txt")
 	wrong_words={}
 	correct_words=set()
@@ -19,12 +19,13 @@ def create_get_typos_count():
 	                    else:
 	                        correct_words.add(token)
 	     return wrong_count
-	         
-	return get_typos_count     
+
+	return get_typos_count
 
 
 def calculate_typo_ratio(df, typo_count_column, token_count_column, typo_ratio_column):
 	df[typo_ratio_column]= df[typo_count_column]/len(df[token_count_column])
+	return df
 
 def apply_typo_ratio(df):
 	get_typos_count = create_get_typos_count()
@@ -34,5 +35,6 @@ def apply_typo_ratio(df):
 
 	calculate_typo_ratio(df, 'typos_title_count','title_tokens', 'title_typo_ratio')
 	calculate_typo_ratio(df, 'typos_text_count','text_tokens', 'text_typo_ratio')
+	return df
 
 
