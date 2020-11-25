@@ -1,6 +1,6 @@
 import re, string
 from nltk.corpus import stopwords
-from df_generic import df_apply
+from generic_func import df_apply
 
 
 def pattern_getty():

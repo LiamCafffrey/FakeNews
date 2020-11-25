@@ -1,4 +1,3 @@
-
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
@@ -7,11 +6,12 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
-import pickle
+import pickle,os
 
+path = os.path.join('..','raw_data','pipeline_logistic.pkl')
 
 def get_x(df):
-	return df[['title_clean', 'text_clean','text_typo_ratio']]
+	return df[['title_clean', 'text_clean','title_length_char','title_Upper_Ratio', 'text_typo_ratio','text_stop_words_ratio']]
 
 def get_y(df):
 	return df['score']
@@ -43,6 +43,6 @@ def fit_model(x_train, y_train):
 	return final_pipe
 
 
-def save_model(pipeline, file_name):
-	with open("pipeline.pkl", "wb") as file:
+def save_model(pipeline):
+	with open(path, "wb") as file:
             pickle.dump(pipeline, file)
