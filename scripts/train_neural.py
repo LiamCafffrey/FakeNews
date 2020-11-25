@@ -15,7 +15,7 @@ from tensorflow.keras import Sequential
 from tensorflow.keras import layers
 from tensorflow.keras.callbacks import EarlyStopping
 
-path = os.path.join('..','raw_data','pipeline_neural')
+path = os.path.join('..','raw_data','neural_model')
 
 def get_x(df):
     return df['title_text']

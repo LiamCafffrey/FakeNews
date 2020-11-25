@@ -1,5 +1,5 @@
 import pandas as pd
-from cleaning_logistic import apply_cleaning
+from cleaning import apply_cleaning
 from typo_func import apply_typo_ratio
 from train_logistic import split_train_test_data, fit_model, save_model
 

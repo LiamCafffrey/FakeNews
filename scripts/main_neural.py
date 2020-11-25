@@ -19,8 +19,8 @@ x_train, x_test, y_train, y_test = split_train_test_data(data_lemmatize)
 
 x_train_preprocessed, x_test_preprocessed = get_preprocessor(x_train,x_test)
 
-pipe_neural = fit_model(x_train_preprocessed, y_train)
+neural_model = fit_model(x_train_preprocessed, y_train)
 
-save_model(pipe_neural)
+save_model(neural_model)
 
-print(pipe_neural.evaluate(x_test_preprocessed, y_test))
+print(neural_model.evaluate(x_test_preprocessed, y_test))

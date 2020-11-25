@@ -8,7 +8,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
 import pickle,os
 
-path = os.path.join('..','raw_data','pipeline_logistic.pkl')
+path = os.path.join('..','raw_data','logistic_model.pkl')
 
 def get_x(df):
 	return df[['title_clean', 'text_clean','title_length_char','title_Upper_Ratio', 'text_typo_ratio','text_stop_words_ratio']]
