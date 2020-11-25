@@ -1,5 +1,8 @@
 import os
+from tensorflow import keras
 
-def load_predict():
-    path = os.path.join('..','raw_data','pipeline_neural.pkl')
-    my_pipeline_neural = pickle.load(open(path,"rb"))
+
+def load_predict_neural():
+    path = os.path.join('..','raw_data','pipeline_neural')
+    model = keras.models.load_model(path)
+    return model

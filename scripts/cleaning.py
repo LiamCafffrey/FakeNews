@@ -1,6 +1,6 @@
 import re, string
 from nltk.corpus import stopwords
-from generic_func import df_apply
+from scripts.generic_func import df_apply
 
 def drop_na(df):
     df.dropna(inplace = True)
@@ -45,7 +45,7 @@ def stopwords_ratio(tokens):
     return count_stop_words / amount_tokens
 
 def remove_stopwords(text):
-    return ''.join([word for word in text.split() if word.lower() not in (stop_words)])
+    return ' '.join([word for word in text.split() if word.lower() not in (stop_words)])
 
 def tokenize_text(text):
     return text.split()
@@ -75,6 +75,8 @@ def apply_cleaning(df):
     clean_getty_image(df,'text')
     df_apply(df,'title', 'title_clean', rem_urls)
     df_apply(df,'text', 'text_clean', rem_urls)
+    df_apply(df, 'text_clean', 'text_clean', remove_punctuation)
+    df_apply(df, 'title_clean', 'title_clean', remove_punctuation)
     df_apply(df,'title_clean', 'title_clean', remove_numbers)
     df_apply(df,'text_clean', 'text_clean', remove_numbers)
 

@@ -1,5 +1,5 @@
 import enchant
-from generic_func import df_apply
+from scripts.generic_func import df_apply
 
 def create_get_typos_count():
 	english = enchant.DictWithPWL("en_US", "vocab.txt")

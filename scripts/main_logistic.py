@@ -6,13 +6,13 @@ from train_logistic import split_train_test_data, fit_model, save_model
 
 data = pd.read_csv('../raw_data/working.csv')
 
-apply_cleaning(data)
+data_clean = apply_cleaning(data)
 
-apply_typo_ratio(data)
+data_full = apply_typo_ratio(data_clean)
 
 
 
-x_train, x_test, y_train, y_test = split_train_test_data(data)
+x_train, x_test, y_train, y_test = split_train_test_data(data_full)
 
 pipe_logistic = fit_model(x_train, y_train)
 

@@ -1,24 +1,26 @@
 import pandas as pd
 from preparing_neural import apply_preparing_merge
-from cleaning_neural import apply_cleaning
-from typo_func import apply_typo_ratio # we need to fix this for deep learning(text+title combined)
+from cleaning import apply_cleaning
 from train_neural import split_train_test_data, fit_model, save_model
+from preparing_neural import apply_lemmatize
+from train_neural import get_preprocessor
+
 
 
 data = pd.read_csv('../raw_data/working.csv')
 
-data = apply_preparing_merge(data)
+data_clean = apply_cleaning(data)
 
-apply_cleaning(data)
+data_merge = apply_preparing_merge(data_clean)
 
-apply_typo_ratio(data)
+data_lemmatize = apply_lemmatize(data_merge)
 
+x_train, x_test, y_train, y_test = split_train_test_data(data_lemmatize)
 
+x_train_preprocessed, x_test_preprocessed = get_preprocessor(x_train,x_test)
 
-x_train, x_test, y_train, y_test = split_train_test_data(data)
-
-pipe_neural = fit_model(x_train, y_train)
+pipe_neural = fit_model(x_train_preprocessed, y_train)
 
 save_model(pipe_neural)
 
-print(pipe_neural.score(x_test, y_test))
+print(pipe_neural.evaluate(x_test_preprocessed, y_test))
