@@ -11,8 +11,8 @@ from scripts.typo_func import apply_typo_ratio
 from tensorflow import keras
 
 
-pipeline_neural = load_predict_neural()
-pipeline_logistic = load_predict_logistic()
+neural_model = load_predict_neural()
+logistic_model = load_predict_logistic()
 
 
 
@@ -35,7 +35,7 @@ if input_method == 'Text' and analyze_status_logistic == True:
     input_df = apply_cleaning(input_df)
     input_df = apply_typo_ratio(input_df)
     input_df = input_df[['title_clean', 'text_clean','title_length_char','title_Upper_Ratio', 'text_typo_ratio','text_stop_words_ratio']]
-    prediction = pipeline_logistic.predict(input_df)
+    prediction = logistic_model.predict(input_df)
     if prediction == 1:
         st.write('I think its true')
     else:
@@ -46,7 +46,7 @@ if input_method == 'Link' and analyze_status_logistic == True:
     input_df = apply_cleaning(input_df)
     input_df = apply_typo_ratio(input_df)
     input_df = input_df[['title_clean', 'text_clean','title_length_char','title_Upper_Ratio', 'text_typo_ratio','text_stop_words_ratio']]
-    prediction = pipeline_logistic.predict(input_df)
+    prediction = logistic_model.predict(input_df)
     if prediction == 1:
         st.write('I think its true')
     else:
