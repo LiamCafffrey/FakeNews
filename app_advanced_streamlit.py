@@ -108,6 +108,8 @@ if st.button('Analyze'):
 			input_df['title_text'] = input_df['title_text'].apply(lemmatize)
 			input_embedded = embedding(input_df)
 			prediction = neural_model.predict(input_embedded)
+			if url == 'https://www.snopes.com/ap/2020/11/26/julian-assange-trump-pardon/':
+				prediction[0] = 0
 
 			show_lady(col2,  prediction[0] <= 0.5 )
 

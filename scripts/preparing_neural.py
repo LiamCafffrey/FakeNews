@@ -35,6 +35,6 @@ def embedding(df):
     max_vocab = 25000
     tokenizer = Tokenizer(num_words=max_vocab)
     tokenizer.fit_on_texts(x_train)
-    df = tokenizer.texts_to_sequences(df)
+    df = tokenizer.texts_to_sequences(df.title_text)
     df = tf.keras.preprocessing.sequence.pad_sequences(df, padding='post', maxlen=256)
     return df
