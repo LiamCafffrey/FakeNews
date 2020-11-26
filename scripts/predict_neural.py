@@ -3,6 +3,7 @@ from tensorflow import keras
 
 
 def load_predict_neural():
-    path = os.path.join('..','raw_data','neural_model')
-    model = keras.models.load_model(path)
-    return model
+    root_path = os.path.dirname(os.path.dirname(__file__))
+    path = os.path.join(root_path,'raw_data','neural_model')
+    return keras.models.load_model(path)
+

@@ -17,6 +17,8 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 path = os.path.join('..','raw_data','neural_model')
 
+path_var = os.path.join('..','raw_data','x_train.pkl')
+
 def get_x(df):
     return df['title_text']
 
@@ -65,3 +67,8 @@ def save_model(pipeline):
  #   with open(path, "wb") as file:
  #           pickle.dump(pipeline, file)
     pipeline.save(path)
+
+
+def save_variable(var):
+    with open(path_var, "wb") as file:
+            pickle.dump(var, file)

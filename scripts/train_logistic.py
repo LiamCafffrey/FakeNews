@@ -11,7 +11,7 @@ import pickle,os
 path = os.path.join('..','raw_data','logistic_model.pkl')
 
 def get_x(df):
-	return df[['title_clean', 'text_clean','title_length_char','title_Upper_Ratio', 'text_typo_ratio','text_stop_words_ratio']]
+	return df[['title_clean', 'text_clean','title_length_char','title_Upper_Ratio','text_stop_words_ratio']]
 
 def get_y(df):
 	return df['score']
