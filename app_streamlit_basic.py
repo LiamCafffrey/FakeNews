@@ -9,11 +9,16 @@ from scripts.cleaning import apply_cleaning
 from scripts.generic_func import df_apply
 from scripts.typo_func import apply_typo_ratio
 from tensorflow import keras
+from scripts.convert_input_to_df import convert
+from scripts.preparing_neural import apply_lemmatize
+from scripts.preparing_neural import apply_preparing_merge
+from scripts.preparing_neural import lemmatize
+from scripts.preparing_neural import embedding
+
 
 
 # neural_model = load_predict_neural()
 logistic_model = load_predict_logistic()
-
 
 
 st.title('Fake or Real?')
@@ -32,9 +37,10 @@ analyze_status_neural = st.button('Analyze_with_Neural')
 ###### Logistic
 if input_method == 'Text' and analyze_status_logistic == True:
 
+    input_df = convert(title,text)
     input_df = apply_cleaning(input_df)
     input_df = apply_typo_ratio(input_df)
-    input_df = input_df[['title_clean', 'text_clean','title_length_char','title_Upper_Ratio', 'text_typo_ratio','text_stop_words_ratio']]
+    input_df = input_df[['title_clean', 'text_clean','title_length_char','title_Upper_Ratio','text_stop_words_ratio']]
     prediction = logistic_model.predict(input_df)
     if prediction == 1:
         st.write('I think its true')
@@ -45,7 +51,11 @@ if input_method == 'Link' and analyze_status_logistic == True:
     input_df = get_title_text_web(url)
     input_df = apply_cleaning(input_df)
     input_df = apply_typo_ratio(input_df)
-    input_df = input_df[['title_clean', 'text_clean','title_length_char','title_Upper_Ratio', 'text_typo_ratio','text_stop_words_ratio']]
+
+    input_df = input_df[['title_clean', 'text_clean','title_length_char','title_Upper_Ratio','text_stop_words_ratio']]
+
+
+
     prediction = logistic_model.predict(input_df)
     if prediction == 1:
         st.write('I think its true')
@@ -54,4 +64,34 @@ if input_method == 'Link' and analyze_status_logistic == True:
 
 
 ###### Neural network
+if input_method == 'Text' and analyze_status_neural == True:
+
+    input_df = convert(title,text)
+    input_df = apply_cleaning(input_df)
+    input_df['title_text'] = input_df['title_clean'] + " " + input_df['text_clean']
+    input_df = input_df[['title_text']]
+    input_df['title_text'] = input_df['title_text'].apply(lemmatize)
+    input_embedded = embedding(input_df)
+    prediction = neural_model.predict(input_embedded)
+    if prediction >= 0.5:
+        st.write('I think its true')
+    else:
+        st.write('I think its fake')
+
+if input_method == 'Link' and analyze_status_neural == True:
+
+    input_df = get_title_text_web(url)
+    input_df = apply_cleaning(input_df)
+    input_df['title_text'] = input_df['title_clean'] + " " + input_df['text_clean']
+    input_df = input_df[['title_text']]
+    input_df['title_text'] = input_df['title_text'].apply(lemmatize)
+    input_embedded = embedding(input_df)
+    prediction = neural_model.predict(input_embedded)
+
+    if prediction >= 0.5:
+       st.write('I think its true')
+    else:
+       st.write('I think its fake')
+
+
 

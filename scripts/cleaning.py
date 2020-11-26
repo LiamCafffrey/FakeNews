@@ -17,7 +17,7 @@ def clean_getty_image(df, column):
 def rem_urls(text):
     return re.sub('https?:\S+','',text)
 
-punc_no_sq = '!“#$%&\()*+,./:;<=>?@[\\]^_`{|}~“”—’-'
+punc_no_sq = '!“#$%&\()*+,./:;<=>?@[\\]^_`{|}~“”—’-"'
 def remove_punctuation(text):
     for punctuation in punc_no_sq:
         text = text.replace(punctuation, '')

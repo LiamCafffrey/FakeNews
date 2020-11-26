@@ -1,0 +1,6 @@
+[1125/210118.452:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não conseguiu localizar o caminho especificado. (0x3)
+[1125/235030.442:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não conseguiu localizar o caminho especificado. (0x3)
+[1126/090540.488:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não conseguiu localizar o caminho especificado. (0x3)
+[1126/113031.445:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não conseguiu localizar o caminho especificado. (0x3)
+[1126/114541.252:ERROR:directory_reader_win.cc(43)] FindFirstFile: O sistema não conseguiu localizar o caminho especificado. (0x3)
+[1126/114541.305:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\liamc\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\ce51d1eb-58ef-464c-999f-766801d96e43: O sistema não conseguiu localizar o caminho especificado. (0x3)
