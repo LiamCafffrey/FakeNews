@@ -1,5 +1,5 @@
 from nltk.stem import WordNetLemmatizer
-from generic_func import df_apply
+from scripts.generic_func import df_apply
 import pandas as pd
 
 def df_concat_title_text(df):
