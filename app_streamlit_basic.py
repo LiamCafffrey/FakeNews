@@ -11,7 +11,7 @@ from scripts.typo_func import apply_typo_ratio
 from tensorflow import keras
 
 
-neural_model = load_predict_neural()
+# neural_model = load_predict_neural()
 logistic_model = load_predict_logistic()
 
 

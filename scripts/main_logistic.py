@@ -4,7 +4,7 @@ from typo_func import apply_typo_ratio
 from train_logistic import split_train_test_data, fit_model, save_model
 
 
-data = pd.read_csv('../raw_data/working.csv')
+data = pd.read_csv('../raw_data/working.csv', error_bad_lines=False)
 
 data_clean = apply_cleaning(data)
 
