@@ -11,9 +11,11 @@ from scripts.cleaning import apply_cleaning
 from scripts.generic_func import df_apply
 from scripts.typo_func import apply_typo_ratio
 
-from scripts.preparing_neural import apply_preparing_merge, apply_lemmatize
+from scripts.preparing_neural import apply_preparing_merge, apply_lemmatize, lemmatize
 
 from load_css import local_css
+from scripts.preparing_neural import embedding
+from scripts.convert_input_to_df import convert
 
 local_css("style.css")
 
@@ -40,7 +42,7 @@ def show_lady(col, fake):
 
 
 logistic_model = load_predict_logistic()
-# neural_model = load_predict_neural() #OSError: SavedModel file does not exist at: ../raw_data/neural_model/{saved_model.pbtxt|saved_model.pb}
+neural_model = load_predict_neural() #OSError: SavedModel file does not exist at: ../raw_data/neural_model/{saved_model.pbtxt|saved_model.pb}
 
 title = None
 text = None
@@ -52,11 +54,11 @@ st.title('Real or Fake?')
 input_method = st.radio('Choose your input', ('Text', 'Link'))
 
 if input_method == 'Text':
-	title = st.text_input('Article title')
-	text = st.text_area('Article body')
+	title = st.text_input('Article - News title')
+	text = st.text_area('Article - News body')
 	
 elif input_method == 'Link':
-	url = st.text_input('Article URL')
+	url = st.text_input('Article - News URL')
 
 
 if st.button('Analyze'):
@@ -68,17 +70,20 @@ if st.button('Analyze'):
 			st.image('./illustrations/new_input.png', use_column_width=True)
 
 		if len(title) > 11 and len(text) > 101:
-			input_df = get_title_text_input(text, title)
+			input_df = convert(title,text)
 			input_df = apply_cleaning(input_df)
-			input_df = apply_typo_ratio(input_df)
-			input_df = input_df[['title_clean', 'text_clean','title_length_char','title_Upper_Ratio', 'text_typo_ratio','text_stop_words_ratio']]
+			input_df = input_df[['title_clean', 'text_clean','title_length_char','title_Upper_Ratio','text_stop_words_ratio']]
 			prediction = logistic_model.predict(input_df)
 
 			show_man(col1, prediction[0] == 0)
 
-			input_df = apply_preparing_merge(text, title)
-			input_df = apply_lemmatize(input_df)
-			prediction = lneural_model.predict(input_df)
+			input_df = convert(title,text)
+			input_df = apply_cleaning(input_df)
+			input_df['title_text'] = input_df['title_clean'] + " " + input_df['text_clean']
+			input_df = input_df[['title_text']]
+			input_df['title_text'] = input_df['title_text'].apply(lemmatize)
+			input_embedded = embedding(input_df)
+			prediction = neural_model.predict(input_embedded)
 			
 			show_lady(col2,  prediction[0] == 0 )
 
@@ -91,15 +96,18 @@ if st.button('Analyze'):
 		if len(url) > 19:
 			input_df = get_title_text_web(url)
 			input_df = apply_cleaning(input_df)
-			input_df = apply_typo_ratio(input_df)
-			input_df = input_df[['title_clean', 'text_clean','title_length_char','title_Upper_Ratio', 'text_typo_ratio','text_stop_words_ratio']]
+			input_df = input_df[['title_clean', 'text_clean','title_length_char','title_Upper_Ratio','text_stop_words_ratio']]
 			prediction = logistic_model.predict(input_df)
 
 			show_man(col1, prediction[0] == 0)
 
-			input_df = apply_preparing_merge(text, title)
-			input_df = apply_lemmatize(input_df)
-			prediction = lneural_model.predict(input_df)
+			input_df = get_title_text_web(url)
+			input_df = apply_cleaning(input_df)
+			input_df['title_text'] = input_df['title_clean'] + " " + input_df['text_clean']
+			input_df = input_df[['title_text']]
+			input_df['title_text'] = input_df['title_text'].apply(lemmatize)
+			input_embedded = embedding(input_df)
+			prediction = neural_model.predict(input_embedded)
 			
 			show_lady(col2,  prediction[0] == 0 )
 
