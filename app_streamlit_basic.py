@@ -17,7 +17,7 @@ from scripts.preparing_neural import embedding
 
 
 
-# neural_model = load_predict_neural()
+neural_model = load_predict_neural()
 logistic_model = load_predict_logistic()
 
 
@@ -39,7 +39,7 @@ if input_method == 'Text' and analyze_status_logistic == True:
 
     input_df = convert(title,text)
     input_df = apply_cleaning(input_df)
-    input_df = apply_typo_ratio(input_df)
+    
     input_df = input_df[['title_clean', 'text_clean','title_length_char','title_Upper_Ratio','text_stop_words_ratio']]
     prediction = logistic_model.predict(input_df)
     if prediction == 1:
@@ -50,7 +50,7 @@ if input_method == 'Text' and analyze_status_logistic == True:
 if input_method == 'Link' and analyze_status_logistic == True:
     input_df = get_title_text_web(url)
     input_df = apply_cleaning(input_df)
-    input_df = apply_typo_ratio(input_df)
+    
 
     input_df = input_df[['title_clean', 'text_clean','title_length_char','title_Upper_Ratio','text_stop_words_ratio']]
 
