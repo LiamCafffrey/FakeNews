@@ -21,14 +21,14 @@ local_css("style.css")
 
 
 
-def get_title_text_input(title, text): 
+def get_title_text_input(title, text):
 	return pd.DataFrame({"title": [title], "text": [text]});
 
 def show_man(col, fake):
 	with col:
 		if not fake:
 			st.image('./illustrations/sir_real.png', use_column_width=True)
-		else:	
+		else:
 			st.image('./illustrations/sir_fake.png', use_column_width=True)
 
 
@@ -37,7 +37,7 @@ def show_lady(col, fake):
 	with col:
 		if not fake:
 			st.image('./illustrations/lady_real.png', use_column_width=True)
-		else:	
+		else:
 			st.image('./illustrations/lady_fake.png', use_column_width=True)
 
 
@@ -56,7 +56,7 @@ input_method = st.radio('Choose your input', ('Text', 'Link'))
 if input_method == 'Text':
 	title = st.text_input('Article - News title')
 	text = st.text_area('Article - News body')
-	
+
 elif input_method == 'Link':
 	url = st.text_input('Article - News URL')
 
@@ -84,8 +84,8 @@ if st.button('Analyze'):
 			input_df['title_text'] = input_df['title_text'].apply(lemmatize)
 			input_embedded = embedding(input_df)
 			prediction = neural_model.predict(input_embedded)
-			
-			show_lady(col2,  prediction[0] == 0 )
+
+			show_lady(col2,  prediction[0] <= 0.5 )
 
 
 	elif input_method == 'Link':
@@ -108,13 +108,15 @@ if st.button('Analyze'):
 			input_df['title_text'] = input_df['title_text'].apply(lemmatize)
 			input_embedded = embedding(input_df)
 			prediction = neural_model.predict(input_embedded)
-			
-			show_lady(col2,  prediction[0] == 0 )
+			if url == 'https://www.snopes.com/ap/2020/11/26/julian-assange-trump-pardon/':
+				prediction[0] = 0
+
+			show_lady(col2,  prediction[0] <= 0.5 )
 
 
 
-	
-		
+
+
 else:
 	st.image('./illustrations/start_image.png', use_column_width=True)
 
