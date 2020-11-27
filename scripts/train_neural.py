@@ -17,7 +17,9 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 path = os.path.join('..','raw_data','neural_model')
 
-path_var = os.path.join('..','raw_data','x_train.pkl')
+root_path = os.path.dirname(os.path.dirname(__file__))
+
+tokenizer_path = os.path.join(root_path,'save_model','neural_tokenizer.json')
 
 def get_x(df):
     return df['title_text']
@@ -41,6 +43,11 @@ def get_preprocessor(x1,x2):
     x_train = tf.keras.preprocessing.sequence.pad_sequences(x_train, padding='post', maxlen=256)
     x_test = tf.keras.preprocessing.sequence.pad_sequences(x_test, padding='post', maxlen=256)
 
+    #writting the tokenizer to a json file
+    with open(tokenizer_path, 'w') as f:
+        tokenizer_json_string = tokenizer.to_json()
+        f.write(tokenizer_json_string)
+
     return x_train,x_test
 
 
@@ -63,12 +70,8 @@ def fit_model(x_train, y_train):
     return model
 
 
+
 def save_model(pipeline):
  #   with open(path, "wb") as file:
  #           pickle.dump(pipeline, file)
     pipeline.save(path)
-
-
-def save_variable(var):
-    with open(path_var, "wb") as file:
-            pickle.dump(var, file)
