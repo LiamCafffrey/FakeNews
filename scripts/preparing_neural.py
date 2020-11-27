@@ -8,8 +8,11 @@ from scripts.train_neural import get_preprocessor
 import pickle
 from scripts.get_x_train import get_var
 import tensorflow as tf
+import json,os
+import keras
 
-
+root_path = os.path.dirname(os.path.dirname(__file__))
+tokenizer_path = os.path.join(root_path,'save_model','neural_tokenizer.json')
 
 def df_concat_title_text(df):
     df['title_text'] = df['title_clean'] + " " + df['text_clean']
@@ -31,10 +34,9 @@ def apply_lemmatize(df):
     return df[['title_text', 'score']]
 
 def embedding(df):
-    x_train = get_var()
-    max_vocab = 25000
-    tokenizer = Tokenizer(num_words=max_vocab)
-    tokenizer.fit_on_texts(x_train)
+    with open(tokenizer_path) as f:
+        tokenizer_json = f.read()
+    tokenizer = keras.preprocessing.text.tokenizer_from_json(tokenizer_json)
     df = tokenizer.texts_to_sequences(df.title_text)
     df = tf.keras.preprocessing.sequence.pad_sequences(df, padding='post', maxlen=256)
     return df

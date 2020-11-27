@@ -123,4 +123,3 @@ else:
 
 
 # st.components.v1.html("<img src='./illustrations/start_image.png'/>")
-
