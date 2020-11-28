@@ -1,9 +1,10 @@
 import pandas as pd
-from scripts.preparing_neural import apply_preparing_merge
-from scripts.cleaning import apply_cleaning
-from scripts.train_neural import split_train_test_data, fit_model, save_model
-from scripts.preparing_neural import apply_lemmatize
-from scripts.train_neural import get_preprocessor
+import scripts
+from preparing_neural import apply_preparing_merge
+from cleaning import apply_cleaning
+from train_neural import split_train_test_data, fit_model, save_model
+from preparing_neural import apply_lemmatize
+from train_neural import get_preprocessor
 
 
 
