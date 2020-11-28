@@ -1,12 +1,12 @@
 from nltk.stem import WordNetLemmatizer
-from scripts.generic_func import df_apply
+from generic_func import df_apply
 import pandas as pd
 from keras.preprocessing.text import Tokenizer
-from scripts.cleaning import apply_cleaning
-from scripts.train_neural import split_train_test_data, fit_model, save_model
-from scripts.train_neural import get_preprocessor
+from cleaning import apply_cleaning
+from train_neural import split_train_test_data, fit_model, save_model
+from train_neural import get_preprocessor
 import pickle
-from scripts.get_x_train import get_var
+from get_x_train import get_var
 import tensorflow as tf
 import json,os
 import keras

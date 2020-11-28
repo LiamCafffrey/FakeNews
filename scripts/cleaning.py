@@ -1,6 +1,6 @@
 import re, string
 from nltk.corpus import stopwords
-from scripts.generic_func import df_apply
+from generic_func import df_apply
 
 def drop_na(df):
     df.dropna(inplace = True)

@@ -1,5 +1,6 @@
 import os
 import pickle
+import streamlit as st
 
 def load_predict_logistic():
     root_path = os.path.dirname(os.path.dirname(__file__))
