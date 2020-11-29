@@ -15,7 +15,7 @@ from tensorflow.keras import Sequential
 from tensorflow.keras import layers
 from tensorflow.keras.callbacks import EarlyStopping
 
-path = os.path.join('..','raw_data','neural_model')
+path = os.path.join('..','save_model','neural_model')
 
 root_path = os.path.dirname(os.path.dirname(__file__))
 
