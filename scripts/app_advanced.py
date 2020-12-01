@@ -90,29 +90,28 @@ if st.button('Analyze'):
 
 	elif input_method == 'Link':
 
-		if len(url) < 20:
+		input_df = get_title_text_web(url)
+
+		if input_df['check'][0] == 'fake':
 			st.image('../illustrations/new_input.png', use_column_width=True)
 
-		if len(url) > 19:
-			input_df = get_title_text_web(url)
-			input_df = apply_cleaning(input_df)
-			input_df = input_df[['title_clean', 'text_clean','title_length_char','title_Upper_Ratio','text_stop_words_ratio']]
-			prediction = logistic_model.predict(input_df)
+		else:
+				input_df = apply_cleaning(input_df)
+				input_df = input_df[['title_clean', 'text_clean','title_length_char','title_Upper_Ratio','text_stop_words_ratio']]
+				prediction = logistic_model.predict(input_df)
 
-			show_man(col1, prediction[0] == 0)
+				show_man(col1, prediction[0] == 0)
 
-			input_df = get_title_text_web(url)
-			input_df = apply_cleaning(input_df)
-			input_df['title_text'] = input_df['title_clean'] + " " + input_df['text_clean']
-			input_df = input_df[['title_text']]
-			input_df['title_text'] = input_df['title_text'].apply(lemmatize)
-			input_embedded = embedding(input_df)
-			prediction = neural_model.predict(input_embedded)
-
-
-			show_lady(col2,  prediction[0] <= 0.5 )
+				input_df = get_title_text_web(url)
+				input_df = apply_cleaning(input_df)
+				input_df['title_text'] = input_df['title_clean'] + " " + input_df['text_clean']
+				input_df = input_df[['title_text']]
+				input_df['title_text'] = input_df['title_text'].apply(lemmatize)
+				input_embedded = embedding(input_df)
+				prediction = neural_model.predict(input_embedded)
 
 
+				show_lady(col2,  prediction[0] <= 0.5 )
 
 
 

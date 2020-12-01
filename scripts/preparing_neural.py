@@ -6,7 +6,6 @@ from cleaning import apply_cleaning
 from train_neural import split_train_test_data, fit_model, save_model
 from train_neural import get_preprocessor
 import pickle
-from get_x_train import get_var
 import tensorflow as tf
 import json,os
 import keras
